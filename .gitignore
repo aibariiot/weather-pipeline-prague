@@ -1,0 +1,4 @@
+venv/
+.env
+weather_data/
+__pycache__/
