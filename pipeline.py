@@ -5,12 +5,12 @@ from dotenv import load_dotenv
 from datetime import datetime
 
 load_dotenv()
-print("🌤️ Weather Pipeline Prague - Starting...")
+print("Weather Pipeline Prague ")
 
 # Open-Meteo API (Prague coordinates)
 url = "https://api.open-meteo.com/v1/forecast?latitude=50.08&longitude=14.44&hourly=temperature_2m,precipitation&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FPrague"
 data = requests.get(url).json()
-print(f"📡 Downloaded {len(data['hourly']['time'])} hours of weather data")
+print(f"Downloaded {len(data['hourly']['time'])} hours of weather data")
 
 # PostgreSQL connection
 conn = psycopg2.connect(
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS weather_daily (
     temp_min_c FLOAT
 );
 """)
-print("✅ Tables created/verified")
+print("Tables created/verified")
 
 # Insert hourly data
 hourly_times = data['hourly']['time']
@@ -58,5 +58,5 @@ conn.commit()
 cur.close()
 conn.close()
 
-print("✅ Pipeline COMPLETED! Data saved to PostgreSQL!")
-print("📊 Check results: docker exec -it weather_db psql -U postgres -c 'SELECT COUNT(*) FROM weather_hourly'")
+print("Pipeline COMPLETED! Data saved to PostgreSQL!")
+print("Check results: docker exec -it weather_db psql -U postgres -c 'SELECT COUNT(*) FROM weather_hourly'")
